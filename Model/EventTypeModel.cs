@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CalendarApp
+namespace CalendarApp.Model
 {
     public class EventTypeModel
     {

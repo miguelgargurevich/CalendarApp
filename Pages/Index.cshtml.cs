@@ -1,8 +1,9 @@
-﻿using CalendarApp;
+﻿using CalendarApp.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net;
 using System.Web;
 
 namespace CalendarApp.Pages
@@ -23,20 +24,13 @@ namespace CalendarApp.Pages
         public async Task OnGetAsync()
         {
             //Populate Model from Database.
-            //this.Fruits = PopulateFruits();
+            //this.EvenTypeList = PopulateEventTypes();
 
-            string firstName, lastName, email;
-            string host = "https://localhost:7261/";
+            string hostlocal = "https://localhost:7261/";
+            string hostPrd = "https://apicalendar20230415010154.azurewebsites.net/";
             string pathname = "api/calendar/getEventTypesAsync";
 
-            firstName = "Test";
-            //LastName = "User";
-            email = "TestUser@email.com";
-
-            string path = pathname + "&first_name=" + firstName + "&last_name=";//+ lastName + "&email=" + email;
-            string requestUrl = host + pathname;
-
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage();
+            string requestUrl = hostlocal + pathname;
 
             try
             {
@@ -56,7 +50,21 @@ namespace CalendarApp.Pages
                 Console.WriteLine("An HTTP request exception occurred. {0}", exception.Message);
             }
         }
-    
+
+        
+
+        //[BindProperty]
+        //public Credentials? BoundCredentialsModel { get; set; }
+
+        public IActionResult OnPostAsync(CalendarModel obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new JsonResult(".Error.");
+            }
+
+            return new JsonResult("Received in server: UserName: "+ obj.Title);
+        }
 
         public void OnPostSubmit(int fruit)
         {

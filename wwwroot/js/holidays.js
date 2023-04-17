@@ -101,7 +101,7 @@ var arrayHolidays = [{
     id: 1009,
     title  : 'Santa Rosa de Lima',
     start  : 'YYYY-08-30 12:00:00',
-    end  : 'YYYY-09-01 12:00:00',
+    end  : 'YYYY-08-31 12:00:00',
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",

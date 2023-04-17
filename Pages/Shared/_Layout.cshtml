@@ -6,7 +6,6 @@
     <title>@ViewData["Title"] - CalendarApp</title>
   @*  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel='stylesheet' href='~/css/style.css'>
     <link rel="stylesheet" href="~/CalendarApp.styles.css" asp-append-version="true" />
 
 
@@ -31,49 +30,46 @@
 </head>
 <body>
     <header>
-        <div class="container centrarImagen">
-            <img src="~/images/agilidad.png" style="width: 100px;" alt="logo agilidad">
-        </div>
-       @* <nav class="navbar navbar-light bg-white border-bottom box-shadow mb-3">*@
+     
+        <nav class="navbar navbar-light bg-white border-bottom box-shadow mb-3">
           
-            @*<div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">CalendarApp</a>   
-            </div>*@
-            @*<div>
-                <ul>
+            <div class="">
+                <a class="navbar-brand" asp-area="" asp-page="/index">Calendar Agile</a>   
+            </div>
+            <div>
+                @*<ul>
                     <li>
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/index">home</a>
                     </li>
                     <li>
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/privacy">privacy</a>
                     </li>
-                </ul>
-            </div>*@
-@*        </nav>*@
+                </ul>*@
+            </div>
+        </nav>
        
     </header>
-    <div class="container">
+    <div class="">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - CalendarApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    <footer class="border-top footer text-muted" style="position:unset; margin-top:20px;">
+        <div class="centrarImagen">
+            &copy; 2023 - CalendarApp - by Miguel Fernandez Gargurevich - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
-       
+        <div class="centrarImagen">
+            <img src="~/images/agilidad.png" style="width: 100px;" alt="logo agilidad">
+        </div>
     </footer>
 
 
     <script src="~/lib/fullcalendar/index.global.js"></script>
     <script src="~/lib/fullcalendar/index.global.min.js"></script>
-    
-
-    
+  
     <script src="~/js/site.js" asp-append-version="true"></script>
-
 
 
     @await RenderSectionAsync("Scripts", required: false)

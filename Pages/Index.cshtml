@@ -1,4 +1,5 @@
 ﻿@page
+@Html.AntiForgeryToken()
 @addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
 @model IndexModel
 
@@ -24,63 +25,7 @@
             </label>
         </div>
     }
- @*   <div>
-        <!-- Toggle Button Style Vacations -->
-        <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Vacations</label>
-        <label class="toggler-wrapper style-25 style-vacations ">
-            <input type="checkbox" id="event-tag-chk-vacations" checked name="event-tag-chk">
-
-            <div class="toggler-slider">
-                <div class="toggler-knob"></div>
-            </div>
-        </label>
-    </div>
-    <div>
-        <!-- Toggle Button Style Holidays -->
-        <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Holidays</label>
-        <label class="toggler-wrapper style-25 style-holidays ">
-            <input type="checkbox" id="event-tag-chk-holidays" checked name="event-tag-chk">
-
-            <div class="toggler-slider">
-                <div class="toggler-knob"></div>
-            </div>
-        </label>
-    </div>
-    <div>
-        <!-- Toggle Button Style Birthdays -->
-        <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Birthdays</label>
-        <label class="toggler-wrapper style-25 style-birthdays ">
-            <input type="checkbox" id="event-tag-chk-birthdays" checked name="event-tag-chk">
-
-            <div class="toggler-slider">
-                <div class="toggler-knob"></div>
-            </div>
-        </label>
-    </div>
-    <div>
-        <!-- Toggle Button Style Sessions -->
-        <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Sessions</label>
-        <label class="toggler-wrapper style-25 style-sessions ">
-            <input type="checkbox" id="event-tag-chk-sessions" checked name="event-tag-chk">
-
-            <div class="toggler-slider">
-                <div class="toggler-knob"></div>
-            </div>
-        </label>
-    </div>
-    <div>
-        <!-- Toggle Button Style Others -->
-        <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Others</label>
-        <label class="toggler-wrapper style-25 style-others ">
-            <input type="checkbox" id="event-tag-chk-others" checked name="event-tag-chk">
-
-            <div class="toggler-slider">
-                <div class="toggler-knob"></div>
-            </div>
-        </label>
-    </div>*@
-
-
+ 
 </div>
 
 <div id="calendar"></div>
@@ -164,14 +109,12 @@
 
 @section Scripts
 {
-    
 
     <script src='~/js/holidays.js'></script>
     <script src='~/js/birthdays.js'></script>
     <script src='~/js/vacations.js'></script>
     <script src='~/js/sessions.js'></script>
     <script src='~/js/others.js'></script>
-    <script src='~/js/script.js'></script>
 
 }
 
