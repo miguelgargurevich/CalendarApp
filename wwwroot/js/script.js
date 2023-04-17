@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     var arrayData = arrayBirthdays.concat(arrayHolidays).concat(arrayVacations).concat(arraySessions).concat(arrayOthers);
+    var arrayEventTypes = [];
     //console.log(arrayData);
 
     var calendarEl = document.getElementById('calendar');
@@ -239,11 +240,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function evalCheckedTypes(){
-      let isCheckedHolidays = $('#event-tag-chk-holidays')[0].checked;
-      let isCheckedBirthdays = $('#event-tag-chk-birthdays')[0].checked;
-      let isCheckedVacations = $('#event-tag-chk-vacations')[0].checked;
-      let isCheckedSessions = $('#event-tag-chk-sessions')[0].checked;
-      let isCheckedOthers = $('#event-tag-chk-others')[0].checked;
+      let isCheckedHolidays = $('#event-tag-chk-holiday')[0].checked;
+      let isCheckedBirthdays = $('#event-tag-chk-birthday')[0].checked;
+      let isCheckedVacations = $('#event-tag-chk-vacation')[0].checked;
+      let isCheckedSessions = $('#event-tag-chk-session')[0].checked;
+      let isCheckedOthers = $('#event-tag-chk-other')[0].checked;
 
       //var events = calendar.getEvents();
 
@@ -295,23 +296,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    $('#event-tag-chk-holidays').change(function() {
+    $('#event-tag-chk-holiday').change(function() {
       evalCheckedTypes();
     });
 
-    $('#event-tag-chk-birthdays').change(function() {
+    $('#event-tag-chk-birthday').change(function() {
       evalCheckedTypes();
     });
 
-    $('#event-tag-chk-vacations').change(function() {
+    $('#event-tag-chk-vacation').change(function() {
       evalCheckedTypes();
     });
 
-    $('#event-tag-chk-sessions').change(function() {
+    $('#event-tag-chk-session').change(function() {
       evalCheckedTypes();
     });
 
-    $('#event-tag-chk-others').change(function() {
+    $('#event-tag-chk-other').change(function() {
       evalCheckedTypes();
     });
 
@@ -466,36 +467,59 @@ document.addEventListener('DOMContentLoaded', function() {
       
     }); 
 
+    function getEventTypes() {
+         //call ajax
+        $.ajax({
+          type: 'GET',
+          contentType: 'application/json; charset=utf-8',
+          url: 'https://localhost:7261/api/calendar/getEventTypesAsync',
+          headers:{
+              'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
+              'Content-Type':'application/json'
+          },
+          success: function (data, status, xhr) {
+              arrayEventTypes = data;
+              console.log('data Async: ', arrayEventTypes);
+          },
+          error: function(error){
+            console.log(error)
+          }
+        });
+    }
     
     $(document).ready(function(){
-      
-      $("#new-event").on('shown.bs.modal', function(){
-          $(this).find('#new-event--title').focus();
-      });
 
-      var eventColor = "";
-      if($("input[type='radio'].radioBtnClassNew").is(':checked')) 
+        //getEventTypes();
+
+        $("#new-event").on('shown.bs.modal', function(){
+            $(this).find('#new-event--title').focus();
+        });
+
+        var eventColor = "";
+        if($("input[type='radio'].radioBtnClassNew").is(':checked')) 
         eventColor = $("input[type='radio'].radioBtnClassNew:checked").val();
 
-      $('#datetimepicker1').datetimepicker({
+        $('#datetimepicker1').datetimepicker({
         format: 'DD/MM/YYYY hh:mm:ss a',
-      });
+        });
   
-      $('#datetimepicker2').datetimepicker({
+        $('#datetimepicker2').datetimepicker({
         format: 'DD/MM/YYYY hh:mm:ss a',
-      });
+        });
 
-      $("#external-events").draggable({ handle: "header" }); 
-      //$(".external-events").resizable();
+        $("#external-events").draggable({ handle: "header" }); 
+        //$(".external-events").resizable();
 
-      // batch every modification into one re-render
-      calendar.batchRendering(() => {
+        // batch every modification into one re-render
+        calendar.batchRendering(() => {
         // remove all events
         calendar.getEvents().forEach(event => event.remove());
         //add events from array concat
         arrayData.forEach(event => calendar.addEvent(event));
        
-      });
+        });
+
+
 
     });
 

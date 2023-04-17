@@ -1,5 +1,7 @@
 ﻿@page
+@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
 @model IndexModel
+
 @{
     ViewData["Title"] = "Home page";
 }
@@ -8,7 +10,21 @@
     <header>
         <h4>Calendar</h4>
     </header>
-    <div>
+    @foreach (var list in Model.EvenTypeList)
+    {
+        <div>
+            <!-- Toggle Button Style Vacations -->
+            <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">@list.Name</label>
+            <label class="toggler-wrapper style-25 style-@list.Name ">
+                <input type="checkbox" id="event-tag-chk-@list.Name" checked name="event-tag-chk">
+
+                <div class="toggler-slider">
+                    <div class="toggler-knob"></div>
+                </div>
+            </label>
+        </div>
+    }
+ @*   <div>
         <!-- Toggle Button Style Vacations -->
         <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Vacations</label>
         <label class="toggler-wrapper style-25 style-vacations ">
@@ -62,7 +78,7 @@
                 <div class="toggler-knob"></div>
             </div>
         </label>
-    </div>
+    </div>*@
 
 
 </div>
@@ -116,13 +132,11 @@
                     </div>
                     <div class="form-group mb-0" style="margin-top: 20px;">
                         <div class="btn-group btn-group-toggle event-tag">
-
-                            <label><input type="radio" name="event-tag" id="new-radio-vacation" class="radioBtnClassNew" value="#54B4D3" autocomplete="off" checked></label>&nbsp;vacation&nbsp;&nbsp;
-                            <label><input type="radio" name="event-tag" id="new-radio-holiday" class="radioBtnClassNew" value="#DC4C64" autocomplete="off"></label>&nbsp;holiday&nbsp;&nbsp;
-                            <label><input type="radio" name="event-tag" id="new-radio-birthday" class="radioBtnClassNew" value="#14A44D" autocomplete="off"></label>&nbsp;birthday&nbsp;&nbsp;
-                            <label><input type="radio" name="event-tag" id="new-radio-session" class="radioBtnClassNew" value="#3B71CA" autocomplete="off"></label>&nbsp;session&nbsp;&nbsp;
-                            <label><input type="radio" name="event-tag" id="new-radio-other" class="radioBtnClassNew" value="#FF8C00" autocomplete="off"></label>&nbsp;other&nbsp;&nbsp;
-
+                            @foreach (var list in Model.EvenTypeList)
+                            {
+                                <label><input type="radio" name="event-tag" id="new-radio-@list.Name" class="radioBtnClassNew" value="@list.Color" autocomplete="off" checked>&nbsp;</label>@list.Name;
+                            }
+                            &nbsp;&nbsp;
                         </div>
                     </div>
                     <input type="hidden" id="new-event--id" class="new-event--id">

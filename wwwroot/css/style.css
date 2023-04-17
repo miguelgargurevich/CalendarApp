@@ -118,31 +118,31 @@ body {
   background-color: white;
 }
 
-.toggler-wrapper.style-holidays input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
+.toggler-wrapper.style-holiday input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
   left: calc(100% - 19px - 3px);
   background-color: #DC4C64;
   /*background-image: url(../img/check-fill.svg);*/
 }
 
-.toggler-wrapper.style-birthdays input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
+.toggler-wrapper.style-birthday input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
   left: calc(100% - 19px - 3px);
   background-color: #14A44D;
   /*background-image: url(../img/check-fill.svg);*/
 }
 
-.toggler-wrapper.style-vacations input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
+.toggler-wrapper.style-vacation input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
   left: calc(100% - 19px - 3px);
   background-color: #54B4D3;
   /*background-image: url(../img/check-fill.svg);*/
 }
 
-.toggler-wrapper.style-sessions input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
+.toggler-wrapper.style-session input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
   left: calc(100% - 19px - 3px);
   background-color: #3B71CA;
   /*background-image: url(../img/check-fill.svg);*/
 }
 
-.toggler-wrapper.style-others input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
+.toggler-wrapper.style-other input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
   left: calc(100% - 19px - 3px);
   background-color: #FF8C00;
   /*background-image: url(../img/check-fill.svg);*/
