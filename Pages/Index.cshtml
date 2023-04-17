@@ -1,0 +1,170 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div id='external-events' style="position: fixed; left: 20px; top: 170px; z-index: 5; display: none; ">
+    <header>
+        <h4>Calendar</h4>
+    </header>
+    <div>
+        <!-- Toggle Button Style Vacations -->
+        <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Vacations</label>
+        <label class="toggler-wrapper style-25 style-vacations ">
+            <input type="checkbox" id="event-tag-chk-vacations" checked name="event-tag-chk">
+
+            <div class="toggler-slider">
+                <div class="toggler-knob"></div>
+            </div>
+        </label>
+    </div>
+    <div>
+        <!-- Toggle Button Style Holidays -->
+        <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Holidays</label>
+        <label class="toggler-wrapper style-25 style-holidays ">
+            <input type="checkbox" id="event-tag-chk-holidays" checked name="event-tag-chk">
+
+            <div class="toggler-slider">
+                <div class="toggler-knob"></div>
+            </div>
+        </label>
+    </div>
+    <div>
+        <!-- Toggle Button Style Birthdays -->
+        <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Birthdays</label>
+        <label class="toggler-wrapper style-25 style-birthdays ">
+            <input type="checkbox" id="event-tag-chk-birthdays" checked name="event-tag-chk">
+
+            <div class="toggler-slider">
+                <div class="toggler-knob"></div>
+            </div>
+        </label>
+    </div>
+    <div>
+        <!-- Toggle Button Style Sessions -->
+        <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Sessions</label>
+        <label class="toggler-wrapper style-25 style-sessions ">
+            <input type="checkbox" id="event-tag-chk-sessions" checked name="event-tag-chk">
+
+            <div class="toggler-slider">
+                <div class="toggler-knob"></div>
+            </div>
+        </label>
+    </div>
+    <div>
+        <!-- Toggle Button Style Others -->
+        <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Others</label>
+        <label class="toggler-wrapper style-25 style-others ">
+            <input type="checkbox" id="event-tag-chk-others" checked name="event-tag-chk">
+
+            <div class="toggler-slider">
+                <div class="toggler-knob"></div>
+            </div>
+        </label>
+    </div>
+
+
+</div>
+
+<div id="calendar"></div>
+
+<div id="img" class="centrarImagen">
+    <img src="~/images/agilidad.png" style="width: 15%;" alt="logo agilidad">
+</div>
+
+<!--* Modal New init *-->
+<div class="modal fade" id="new-event" tabindex="0" role="dialog" aria-labelledby="new-event-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3><span>Event</span></h3>
+            </div>
+            <div class="modal-body">
+
+                <form class="new-event--form">
+
+                    <div class="form-group">
+                        <label class="form-control-label">Event name</label>
+                        <input type="text" id="new-event--title" class="form-control form-control-alternative new-event--title" placeholder="Event name">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label">Start date</label>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input type='text' id="new-event--start" class="form-control new-event--start" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="divEndDateNew" class="form-group">
+                        <label class="form-control-label">End date</label>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker2'>
+                                <input type='text' id="new-event--end" class="form-control new-event--end" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Description</label>
+                        <textarea id="new-event--description" class="form-control form-control-alternative new-event--description textarea-autosize" style="max-width: 530px; min-width: 530px; min-height: 80px; max-height: 200px;" placeholder="Description"></textarea>
+                        <i class="form-group--bar"></i>
+                    </div>
+                    <div class="form-group mb-0" style="margin-top: 20px;">
+                        <div class="btn-group btn-group-toggle event-tag">
+
+                            <label style="background-color: #54B4D3; padding: 10px;border-radius: 10px;"><input type="radio" name="event-tag" id="new-radio-vacation" class="radioBtnClassNew" value="#54B4D3" autocomplete="off" checked></label>
+                            <label style="background-color: #DC4C64; padding: 10px;border-radius: 10px;"><input type="radio" name="event-tag" id="new-radio-holiday" class="radioBtnClassNew" value="#DC4C64" autocomplete="off"></label>
+                            <label style="background-color: #14A44D; padding: 10px;border-radius: 10px;"><input type="radio" name="event-tag" id="new-radio-birthday" class="radioBtnClassNew" value="#14A44D" autocomplete="off"></label>
+                            <label style="background-color: #3B71CA; padding: 10px;border-radius: 10px;"><input type="radio" name="event-tag" id="new-radio-session" class="radioBtnClassNew" value="#3B71CA" autocomplete="off"></label>
+                            <label style="background-color: #FF8C00; padding: 10px;border-radius: 10px;"><input type="radio" name="event-tag" id="new-radio-other" class="radioBtnClassNew" value="#FF8C00" autocomplete="off"></label>
+
+                        </div>
+                    </div>
+                    <input type="hidden" id="new-event--id" class="new-event--id">
+                    <input type="hidden" id="new-event--allDay" class="new-event--allDay" />
+                    <input type="hidden" id="new-event--start-h" class="new-event--start-h" />
+                    <input type="hidden" id="new-event--end-h" class="new-event--end-h" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <div class="btn-group">
+
+                        <button type="submit" class="btn btn-danger" data-calendar="delete" data-dismiss="modal" id="btnEliminar">Delete</button>
+                        <button type="submit" class="btn btn-primary" data-calendar="update" data-dismiss="modal" id="btnActualizar">Update</button>
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal" id="btnAgregar">Add event</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+    
+
+    <script src='~/js/holidays.js'></script>
+    <script src='~/js/birthdays.js'></script>
+    <script src='~/js/vacations.js'></script>
+    <script src='~/js/sessions.js'></script>
+    <script src='~/js/others.js'></script>
+    <script src='~/js/script.js'></script>
+
+}
+
+
+
+
