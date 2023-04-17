@@ -4,8 +4,9 @@
 // Write your JavaScript code.
 document.addEventListener('DOMContentLoaded', function () {
 
-    var arrayData = arrayBirthdays.concat(arrayHolidays).concat(arrayVacations).concat(arraySessions).concat(arrayOthers);
-    var arrayEventTypes = [];
+    var arrayData = []; //arrayBirthdays.concat(arrayHolidays).concat(arrayVacations).concat(arraySessions).concat(arrayOthers);
+
+    
     //console.log(arrayData);
 
     var calendarEl = document.getElementById('calendar');
@@ -79,13 +80,75 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
+
             calendar.render();
 
         },
         eventRemove: function () {
             //alert("debe remover el elemento del array y la BD");
         },
+        eventDrop: function (arg) {
+            //alert("debe modificar el elemento del array y la BD");
+            //console.log(arg.event);
 
+            eventColor = arg.event._def.ui.backgroundColor;
+            id = arg.event._def.publicId;
+            title = arg.event._def.title;
+            start = arg.event._instance.range.start;
+            end = arg.event._instance.range.end
+            allDay = arg.event._def.allDay;
+            type = arg.event._def.extendedProps.type;
+            description = arg.event._def.extendedProps.description;
+
+            var data =
+            {
+                id: id,
+                title: title,
+                start: start,
+                end: end,
+                allDay: allDay,
+                description: description,
+                EventTypeId: 1,
+                type: type,
+                CalendarTypeId: 1,
+                CalendarTypeName: "Squad Los Trovadores",
+                UserCreate: '1'
+
+            };
+
+            postEventUpd(data);
+        }, 
+        eventResize: function (arg) {
+            //alert("debe modificar el elemento del array y la BD");
+            //console.log(arg.event);
+
+            eventColor = arg.event._def.ui.backgroundColor;
+            id = arg.event._def.publicId;
+            title = arg.event._def.title;
+            start = arg.event._instance.range.start;
+            end = arg.event._instance.range.end
+            allDay = arg.event._def.allDay;
+            type = arg.event._def.extendedProps.type;
+            description = arg.event._def.extendedProps.description;
+
+            var data =
+            {
+                id: id,
+                title: title,
+                start: start,
+                end: end,
+                allDay: allDay,
+                description: description,
+                EventTypeId: 1,
+                type: type,
+                CalendarTypeId: 1,
+                CalendarTypeName: "Squad Los Trovadores",
+                UserCreate: '1'
+
+            };
+
+            postEventUpd(data);
+        }, 
         navLinks: true, // can click day/week names to navigate views
         selectable: true,
         selectMirror: true,
@@ -160,6 +223,8 @@ document.addEventListener('DOMContentLoaded', function () {
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
 
+        //textColor: 'white',
+
     });
 
 
@@ -182,7 +247,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         return elementtype;
     }
-
 
     function viewFilter() {
         var pnl = document.getElementById("external-events");
@@ -245,7 +309,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function evalCheckedTypes() {
+
         let isCheckedHolidays = $('#event-tag-chk-holiday')[0].checked;
+        //console.log(isCheckedHolidays);
         let isCheckedBirthdays = $('#event-tag-chk-birthday')[0].checked;
         let isCheckedVacations = $('#event-tag-chk-vacation')[0].checked;
         let isCheckedSessions = $('#event-tag-chk-session')[0].checked;
@@ -292,7 +358,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-
     }
 
 
@@ -316,17 +381,16 @@ document.addEventListener('DOMContentLoaded', function () {
         evalCheckedTypes();
     });
 
-
     $('#btnEliminar').click(function () {
-        var myId = document.getElementById("new-event--id").value;
-        var event = calendar.getEventById(myId);
+        var id = document.getElementById("new-event--id").value;
+        var event = calendar.getEventById(id);
         //console.log(event);
 
         if (confirm('Are you sure you want to delete this event?')) {
             event.remove(); //remove from calendar
 
             arrayData.forEach((element, index) => {   //remove from initial array (concat) 
-                if (element.id == myId) {
+                if (element.id == id) {
                     arrayData.splice(index, 1);
                     return;
                 }
@@ -335,34 +399,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         ////call ajax
-        //$.ajax({
-        //  type: 'GET',
-        //  contentType: 'application/json; charset=utf-8',
-        //  url: 'https://localhost:7261/api/calendar/getEventTypesAsync',
-        //  headers:{         
-        //      'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
-        //      'Content-Type':'application/json'
-        //  },
-        //  success: function (data, status, xhr) {
+        var data =
+        {
+            Id: id
+        };
 
-        //    console.log('data Async: ', data);
-        //  },
-        //  error: function(error){
-        //    console.log(error)
-        //  }
-        //});
+        postEventDel(data);
 
         calendar.render();
     });
-
-    async function doAjax(url, params = {}, method = 'POST') {
-        return $.ajax({
-            url: url,
-            type: method,
-            dataType: 'json',
-            data: params
-        });
-    }
 
     $('#btnAgregar').click(function () {
         var start_format = document.getElementById("new-event--start").value;
@@ -407,7 +452,6 @@ document.addEventListener('DOMContentLoaded', function () {
             'end': end,
             'allDay': allDayBoolean,
             'color': eventColor,
-            'textColor': 'white',
             'type': type,
             'description': description,
         });
@@ -419,7 +463,6 @@ document.addEventListener('DOMContentLoaded', function () {
             end: end_format_date,
             allDay: allDayBoolean,
             color: eventColor,
-            textColor: 'white',
             type: type,
             description: description,
 
@@ -428,14 +471,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         var data = 
         {
-            Id: id,
-            Title: title,
-            StartDate: start_format_date,
-            EndDate: end_format_date,
-            AllDay: allDayBoolean,
-            Description: description,
+            id: id,
+            title: title,
+            start: start_format_date,
+            end: end_format_date,
+            allDay: allDayBoolean,
+            description: description,
             EventTypeId: 1,
-            EventTypeName: type,
+            type: type,
             CalendarTypeId: 1,
             CalendarTypeName: "Squad Los Trovadores",
             UserCreate: '1'
@@ -447,7 +490,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     });
-
 
     $('#btnActualizar').click(function () {
 
@@ -485,46 +527,31 @@ document.addEventListener('DOMContentLoaded', function () {
         event.setExtendedProp('description', description)
         //event.setProp('allDay', allDayBoolean);
 
-        ////
-        var allDay = document.getElementById("new-event--allDay").value;
-        var allDayBoolean = (allDay === 'true');
-        var type = evalTypeColor(eventColor);
-
-        var data =
-        {
-            Id: id,
-            Title: title,
-            StartDate: start_format_date,
-            EndDate: end_format_date,
-            AllDay: allDayBoolean,
-            Description: description,
-            EventTypeId: 1,
-            EventTypeName: type,
-            CalendarTypeId: 1,
-            CalendarTypeName: "Squad Los Trovadores",
-            UserCreate: '1'
-
-        };
-
-        postEventUpd(data);
-
-        
-
     });
 
-    function getEventTypes() {
+    function getCalendarAsync() {
         //call ajax
         $.ajax({
             type: 'GET',
             contentType: 'application/json; charset=utf-8',
-            url: 'https://localhost:7261/api/calendar/getEventTypesAsync',
+            url: 'https://localhost:7261/api/calendar/getCalendarAsync',
             headers: {
                 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
                 'Content-Type': 'application/json'
             },
             success: function (data, status, xhr) {
-                //arrayEventTypes = data;
-                console.log('data Async: ', arrayEventTypes);
+                arrayData = data;
+                //console.log('data Async: ', arrayCalendarList);
+
+                // batch every modification into one re-render
+                calendar.batchRendering(() => {
+                    // remove all events
+                    calendar.getEvents().forEach(event => event.remove());
+                    //add events from array concat
+                    arrayData.forEach(event => calendar.addEvent(event));
+
+                });
+
             },
             error: function (error) {
                 console.log(error)
@@ -533,7 +560,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function postEventAdd(obj) {
-        console.log(obj);
+        //console.log(obj);
         //call ajax
         $.ajax({
             type: "POST",
@@ -544,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function () {
             dataType: "json",
             success: function (data, status, jqXHR) {
 
-                alert("success");// write success in " "
+                //alert("success");// write success in " "
             },
 
             error: function (jqXHR, status) {
@@ -568,7 +595,31 @@ document.addEventListener('DOMContentLoaded', function () {
             dataType: "json",
             success: function (data, status, jqXHR) {
 
-                alert("success");// write success in " "
+                //alert("success");// write success in " "
+            },
+
+            error: function (jqXHR, status) {
+                // error handler
+                console.log(jqXHR);
+                alert('fail' + status.code);
+            }
+        });
+
+    }
+
+    function postEventDel(obj) {
+        console.log(obj);
+        //call ajax
+        $.ajax({
+            type: "POST",
+            url: 'https://localhost:7261/api/calendar/postEventDelAsync',
+            data: JSON.stringify(obj),// now data come in this function
+            contentType: "application/json; charset=utf-8",
+            crossDomain: true,
+            dataType: "json",
+            success: function (data, status, jqXHR) {
+
+                //alert("success");// write success in " "
             },
 
             error: function (jqXHR, status) {
@@ -603,16 +654,11 @@ document.addEventListener('DOMContentLoaded', function () {
         $("#external-events").draggable({ handle: "header" });
         //$(".external-events").resizable();
 
-        // batch every modification into one re-render
-        calendar.batchRendering(() => {
-            // remove all events
-            calendar.getEvents().forEach(event => event.remove());
-            //add events from array concat
-            arrayData.forEach(event => calendar.addEvent(event));
+        //$('#event-tag-chk-holiday').prop('checked', false);
 
-        });
-
-
+        getCalendarAsync(); 
+       
+        //evalCheckedTypes();
 
     });
 

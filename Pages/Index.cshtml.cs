@@ -13,6 +13,7 @@ namespace CalendarApp.Pages
         static HttpClient myAppHTTPClient = new HttpClient();
         private readonly ILogger<IndexModel> _logger;
         public List<EventTypeModel>? EvenTypeList { get; set; }
+        public List<CalendarModel>? CalendarList { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -23,26 +24,38 @@ namespace CalendarApp.Pages
 
         public async Task OnGetAsync()
         {
-            //Populate Model from Database.
-            //this.EvenTypeList = PopulateEventTypes();
 
             string hostlocal = "https://localhost:7261/";
             string hostPrd = "https://apicalendar20230415010154.azurewebsites.net/";
-            string pathname = "api/calendar/getEventTypesAsync";
+            string pathnameEventType = "api/calendar/getEventTypesAsync";
+            string pathnameCalendar = "api/calendar/getCalendarAsync";
 
-            string requestUrl = hostlocal + pathname;
+            string requestUrlEventType = hostlocal + pathnameEventType;
+            string requestUrlCalendar = hostlocal + pathnameCalendar;
 
             try
             {
-                HttpResponseMessage responseMessage = await myAppHTTPClient.GetAsync(requestUrl);
-                HttpContent content = responseMessage.Content;
-                var message = await content.ReadAsStringAsync();
+                var message = "";
+                HttpResponseMessage responseMessage;
+                HttpContent content;
+                JArray objRpta;
 
-                var o = JsonConvert.DeserializeObject<JArray>(message);
-                this.EvenTypeList = o.Value<JArray>().ToObject<List<EventTypeModel>>();
 
-                //Console.WriteLine("The output from thirdparty is: {0}", message);
-                //ViewData["EventTypeModel"] = this.EvenTypeList;
+                responseMessage = await myAppHTTPClient.GetAsync(requestUrlEventType);
+                content = responseMessage.Content;
+                message = await content.ReadAsStringAsync();
+
+                objRpta = JsonConvert.DeserializeObject<JArray>(message);
+                this.EvenTypeList = objRpta.Value<JArray>().ToObject<List<EventTypeModel>>();
+
+
+                //responseMessage = await myAppHTTPClient.GetAsync(requestUrlCalendar);
+                //content = responseMessage.Content;
+                //message = await content.ReadAsStringAsync();
+
+                //objRpta = JsonConvert.DeserializeObject<JArray>(message);
+                //this.CalendarList = objRpta.Value<JArray>().ToObject<List<CalendarModel>>();
+
                 RedirectToPage();
             }
             catch (HttpRequestException exception)
@@ -51,66 +64,8 @@ namespace CalendarApp.Pages
             }
         }
 
-        
-
-        //[BindProperty]
-        //public Credentials? BoundCredentialsModel { get; set; }
-
-        public IActionResult OnPostAsync(CalendarModel obj)
-        {
-            if (!ModelState.IsValid)
-            {
-                return new JsonResult(".Error.");
-            }
-
-            return new JsonResult("Received in server: UserName: "+ obj.Title);
-        }
-
-        public void OnPostSubmit(int fruit)
-        {
-            //Populate Model from Database.
-            this.EvenTypeList = PopulateFruits();
-
-            //Fetch the ID and the TEXT value.
-            string message = "Selected Fruit Id: " + fruit;
-            message += "\\nFruit Name: " + this.EvenTypeList.Find(p => p.Id == fruit).Name;
-
-            //Set the value in ViewData.
-            ViewData["Message"] = message;
-        }
-
-        private static List<EventTypeModel> PopulateFruits()
-        {
-            string constr = @"Data Source=.\SQL2019;Initial Catalog=AjaxSamples;Integrated Security=true";
-            List<EventTypeModel> fruits = new List<EventTypeModel>();
-            //using (SqlConnection con = new SqlConnection(constr))
-            //{
-            //    string query = "SELECT FruitName, FruitId FROM Fruits";
-            //    using (SqlCommand cmd = new SqlCommand(query))
-            //    {
-            //        cmd.Connection = con;
-            //        con.Open();
-            //        using (SqlDataReader sdr = cmd.ExecuteReader())
-            //        {
-            //            while (sdr.Read())
-            //            {
-            //                fruits.Add(new FruitModel
-            //                {
-            //                    FruitName = sdr["FruitName"].ToString(),
-            //                    FruitId = Convert.ToInt32(sdr["FruitId"])
-            //                });
-            //            }
-            //        }
-            //        con.Close();
-            //    }
-            //}
-
-            return fruits;
-        }
     }
 }
-
-
 
 
 
