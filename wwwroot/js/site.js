@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type = arg.event._def.extendedProps.type;
             description = arg.event._def.extendedProps.description;
 
-            arrayData.forEach((element, index) => {   //remove from initial array (concat) 
+            arrayData.forEach((element, index) => {  
                 if (element.id == id) {
 
                     element.color = eventColor;
@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
             });
-
 
             calendar.render();
 
@@ -111,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             postEventUpd(data);
-        }, 
+        },  
         eventResize: function (arg) {
 
             eventColor = arg.event._def.ui.backgroundColor;
@@ -186,10 +185,9 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById("btnActualizar").style.display = "block";
             document.getElementById("btnEliminar").style.display = "block";
 
-
             document.getElementById("new-event--id").value = arg.event._def.publicId;
             document.getElementById("new-event--title").value = arg.event._def.title //startStr fecha str
-            //document.getElementById("edit-event--allDay").value = arg.event.allDay
+            document.getElementById("new-event--allDay").value = arg.event.allDay
             document.getElementById("new-event--start-h").value = arg.event.startStr; //fecha str
             document.getElementById("new-event--end-h").value = arg.event.endStr //startStr fecha str\
 
@@ -228,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (eventColor == '#DC4C64') //holiday
             elementtype = "holiday";
 
-        if (eventColor == '#48b8d6') //vacation
+        if (eventColor == '#1e81b0') //vacation
             elementtype = "vacation";
 
         if (eventColor == '#0042FF') //session
@@ -392,8 +390,32 @@ document.addEventListener('DOMContentLoaded', function () {
             crossDomain: true,
             dataType: "json",
             success: function (data, status, jqXHR) {
+                //console.log(data);
 
-                //alert("success");// write success in " "
+                var id = data.id;
+                arrayData.push({ //add to initial array
+                    'id': id,
+                    'title': obj.title,
+                    'start': obj.start,
+                    'end': obj.end,
+                    'allDay': obj.allDay,
+                    'color': obj.color,
+                    'type': obj.type,
+                    'description': obj.description,
+                });
+
+                calendar.addEvent({  //add to calendar
+                    id: id,
+                    title: obj.title,
+                    start: obj.start,
+                    end: obj.end,
+                    allDay: obj.allDay,
+                    color: obj.color,
+                    type: obj.type,
+                    description: obj.description,
+
+                });
+
             },
 
             error: function (jqXHR, status) {
@@ -406,6 +428,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function postEventUpd(obj) {
+        //console.log(obj);
+
         var urlApi = host + "api/calendar/postEventUpdAsync";
         $.ajax({
             type: "POST",
@@ -422,7 +446,7 @@ document.addEventListener('DOMContentLoaded', function () {
             error: function (jqXHR, status) {
                 // error handler
                 console.log(jqXHR);
-                alert('fail' + status.code);
+                alert('fail: ' + status.code);
             }
         });
 
@@ -534,39 +558,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         var type = evalTypeColor(eventColor);
 
-
-        arrayData.push({ //add to initial array
-            'id': id,
-            'title': title,
-            'start': start,
-            'end': end,
-            'allDay': allDayBoolean,
-            'color': eventColor,
-            'type': type,
-            'description': description,
-        });
-
-        calendar.addEvent({  //add to calendar
-            id: id,
-            title: title,
-            start: start_format_date,
-            end: end_format_date,
-            allDay: allDayBoolean,
-            color: eventColor,
-            type: type,
-            description: description,
-
-        });
-
+        //console.log(type);
 
         var data =
         {
-            id: id,
+            id: 0,
             title: title,
             start: start_format_date,
             end: end_format_date,
             allDay: allDayBoolean,
             description: description,
+            color: eventColor,
             EventTypeId: 1,
             type: type,
             CalendarTypeId: 1,
@@ -587,19 +589,20 @@ document.addEventListener('DOMContentLoaded', function () {
         var event = calendar.getEventById(id);
 
         var title = document.getElementById("new-event--title").value;
-
         var description = document.getElementById("new-event--description").value;
+        var allDay = document.getElementById("new-event--allDay").value;
+        var allDayBoolean = (allDay === 'true');
 
         var eventColor = "";
         if ($("input[type='radio'].radioBtnClassNew").is(':checked')) {
             eventColor = $("input[type='radio'].radioBtnClassNew:checked").val();
         }
 
-        var start_format = document.getElementById("new-event--start").value;
-        var end_format = document.getElementById("new-event--end").value;
+        var start = document.getElementById("new-event--start").value;
+        var end = document.getElementById("new-event--end").value;
 
-        var start_format_date = strToDate(start_format);
-        var end_format_date = strToDate(end_format);
+        var start_format_date = strToDate(start);
+        var end_format_date = strToDate(end);
 
         if (start_format_date > end_format_date) {
             alert("Invalid range");
@@ -617,6 +620,28 @@ document.addEventListener('DOMContentLoaded', function () {
         event.setExtendedProp('description', description)
         //event.setProp('allDay', allDayBoolean);
 
+
+        var type = evalTypeColor(eventColor);
+
+        var data =
+        {
+            id: id,
+            title: title,
+            start: start_format_date,
+            end: end_format_date,
+            allDay: allDayBoolean,
+            description: description,
+            EventTypeId: 1,
+            type: type,
+            CalendarTypeId: 1,
+            CalendarTypeName: "Squad Los Trovadores",
+            UserCreate: '1'
+
+        };
+
+        postEventUpd(data);
+
+
     });
 
 
@@ -627,11 +652,11 @@ document.addEventListener('DOMContentLoaded', function () {
         $("#new-event").on('shown.bs.modal', function () {
             $(this).find('#new-event--title').focus();
         });
-
+        /*
         var eventColor = "";
         if ($("input[type='radio'].radioBtnClassNew").is(':checked'))
             eventColor = $("input[type='radio'].radioBtnClassNew:checked").val();
-
+        */
         $('#datetimepicker1').datetimepicker({
             format: 'DD/MM/YYYY hh:mm:ss a',
         });

@@ -25,8 +25,8 @@ namespace CalendarApp.Pages
         public async Task OnGetAsync()
         {
 
-            string host = "https://localhost:7261/";
-            //string host = "https://apicalendar20230415010154.azurewebsites.net/";
+            //string host = "https://localhost:7261/";
+            string host = "https://apicalendar20230415010154.azurewebsites.net/";
             string pathnameEventType = "api/calendar/getEventTypesAsync";
             string pathnameCalendar = "api/calendar/getCalendarAsync";
 
