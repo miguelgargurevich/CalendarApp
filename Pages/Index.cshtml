@@ -79,9 +79,10 @@
                         <div class="btn-group btn-group-toggle event-tag">
                             @foreach (var list in Model.EvenTypeList)
                             {
-                                <label><input type="radio" name="event-tag" id="new-radio-@list.Name" class="radioBtnClassNew" value="@list.Color" autocomplete="off" checked>&nbsp;</label>@list.Name;
+                                <label><input type="radio" name="event-tag" id="new-radio-@list.Name" class="radioBtnClassNew" value="@list.Color" autocomplete="off" checked>&nbsp;</label>
+                                @list.Name;
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             }
-                            &nbsp;&nbsp;
                         </div>
                     </div>
                     <input type="hidden" id="new-event--id" class="new-event--id">

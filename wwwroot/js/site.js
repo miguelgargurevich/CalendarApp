@@ -3,6 +3,8 @@
 
 // Write your JavaScript code.
 document.addEventListener('DOMContentLoaded', function () {
+    var host = "https://localhost:7261/";
+    //var host = "https://apicalendar20230415010154.azurewebsites.net/";
 
     var arrayData = []; //arrayBirthdays.concat(arrayHolidays).concat(arrayVacations).concat(arraySessions).concat(arrayOthers);
 
@@ -51,9 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
             //alert("debe agregar el elemento al array y la BD");
         },
         eventChange: function (arg) {
-            //alert("debe modificar el elemento del array y la BD");
-            //console.log(arg.event);
-
             eventColor = arg.event._def.ui.backgroundColor;
             id = arg.event._def.publicId;
             title = arg.event._def.title;
@@ -62,8 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
             allDay = arg.event._def.allDay;
             type = arg.event._def.extendedProps.type;
             description = arg.event._def.extendedProps.description;
-
-            //console.log(type);
 
             arrayData.forEach((element, index) => {   //remove from initial array (concat) 
                 if (element.id == id) {
@@ -88,9 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
             //alert("debe remover el elemento del array y la BD");
         },
         eventDrop: function (arg) {
-            //alert("debe modificar el elemento del array y la BD");
-            //console.log(arg.event);
-
             eventColor = arg.event._def.ui.backgroundColor;
             id = arg.event._def.publicId;
             title = arg.event._def.title;
@@ -119,8 +113,6 @@ document.addEventListener('DOMContentLoaded', function () {
             postEventUpd(data);
         }, 
         eventResize: function (arg) {
-            //alert("debe modificar el elemento del array y la BD");
-            //console.log(arg.event);
 
             eventColor = arg.event._def.ui.backgroundColor;
             id = arg.event._def.publicId;
@@ -236,13 +228,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (eventColor == '#DC4C64') //holiday
             elementtype = "holiday";
 
-        if (eventColor == '#54B4D3') //vacation
+        if (eventColor == '#48b8d6') //vacation
             elementtype = "vacation";
 
-        if (eventColor == '#3B71CA') //session
+        if (eventColor == '#0042FF') //session
             elementtype = "session";
 
-        if (eventColor == '#FF8C00') //other
+        if (eventColor == '#844CBF') //other
             elementtype = "other";
 
         return elementtype;
@@ -360,6 +352,104 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
+    function getCalendarAsync() {
+        var urlApi = host + "api/calendar/getCalendarAsync";
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            url: urlApi,
+            headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
+                'Content-Type': 'application/json'
+            },
+            success: function (data, status, xhr) {
+                arrayData = data;
+                //console.log('data Async: ', arrayCalendarList);
+
+                // batch every modification into one re-render
+                calendar.batchRendering(() => {
+                    // remove all events
+                    calendar.getEvents().forEach(event => event.remove());
+                    //add events from array concat
+                    arrayData.forEach(event => calendar.addEvent(event));
+
+                });
+
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+    }
+
+    function postEventAdd(obj) {
+        var urlApi = host + "api/calendar/postEventAddAsync";
+        $.ajax({
+            type: "POST",
+            url: urlApi,
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=utf-8",
+            crossDomain: true,
+            dataType: "json",
+            success: function (data, status, jqXHR) {
+
+                //alert("success");// write success in " "
+            },
+
+            error: function (jqXHR, status) {
+                // error handler
+                console.log(jqXHR);
+                alert('fail' + status.code);
+            }
+        });
+
+    }
+
+    function postEventUpd(obj) {
+        var urlApi = host + "api/calendar/postEventUpdAsync";
+        $.ajax({
+            type: "POST",
+            url: urlApi,
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=utf-8",
+            crossDomain: true,
+            dataType: "json",
+            success: function (data, status, jqXHR) {
+
+                //alert("success");// write success in " "
+            },
+
+            error: function (jqXHR, status) {
+                // error handler
+                console.log(jqXHR);
+                alert('fail' + status.code);
+            }
+        });
+
+    }
+
+    function postEventDel(obj) {
+        var urlApi = host + "api/calendar/postEventDelAsync";
+        $.ajax({
+            type: "POST",
+            url: urlApi,
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=utf-8",
+            crossDomain: true,
+            dataType: "json",
+            success: function (data, status, jqXHR) {
+
+                //alert("success");// write success in " "
+            },
+
+            error: function (jqXHR, status) {
+                // error handler
+                console.log(jqXHR);
+                alert('fail' + status.code);
+            }
+        });
+
+    }
 
     $('#event-tag-chk-holiday').change(function () {
         evalCheckedTypes();
@@ -469,7 +559,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-        var data = 
+        var data =
         {
             id: id,
             title: title,
@@ -529,107 +619,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-    function getCalendarAsync() {
-        //call ajax
-        $.ajax({
-            type: 'GET',
-            contentType: 'application/json; charset=utf-8',
-            url: 'https://localhost:7261/api/calendar/getCalendarAsync',
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
-                'Content-Type': 'application/json'
-            },
-            success: function (data, status, xhr) {
-                arrayData = data;
-                //console.log('data Async: ', arrayCalendarList);
-
-                // batch every modification into one re-render
-                calendar.batchRendering(() => {
-                    // remove all events
-                    calendar.getEvents().forEach(event => event.remove());
-                    //add events from array concat
-                    arrayData.forEach(event => calendar.addEvent(event));
-
-                });
-
-            },
-            error: function (error) {
-                console.log(error)
-            }
-        });
-    }
-
-    function postEventAdd(obj) {
-        //console.log(obj);
-        //call ajax
-        $.ajax({
-            type: "POST",
-            url: 'https://localhost:7261/api/calendar/postEventAddAsync',
-            data: JSON.stringify(obj),// now data come in this function
-            contentType: "application/json; charset=utf-8",
-            crossDomain: true,
-            dataType: "json",
-            success: function (data, status, jqXHR) {
-
-                //alert("success");// write success in " "
-            },
-
-            error: function (jqXHR, status) {
-                // error handler
-                console.log(jqXHR);
-                alert('fail' + status.code);
-            }
-        });
-
-    }
-
-    function postEventUpd(obj) {
-        console.log(obj);
-        //call ajax
-        $.ajax({
-            type: "POST",
-            url: 'https://localhost:7261/api/calendar/postEventUpdAsync',
-            data: JSON.stringify(obj),// now data come in this function
-            contentType: "application/json; charset=utf-8",
-            crossDomain: true,
-            dataType: "json",
-            success: function (data, status, jqXHR) {
-
-                //alert("success");// write success in " "
-            },
-
-            error: function (jqXHR, status) {
-                // error handler
-                console.log(jqXHR);
-                alert('fail' + status.code);
-            }
-        });
-
-    }
-
-    function postEventDel(obj) {
-        console.log(obj);
-        //call ajax
-        $.ajax({
-            type: "POST",
-            url: 'https://localhost:7261/api/calendar/postEventDelAsync',
-            data: JSON.stringify(obj),// now data come in this function
-            contentType: "application/json; charset=utf-8",
-            crossDomain: true,
-            dataType: "json",
-            success: function (data, status, jqXHR) {
-
-                //alert("success");// write success in " "
-            },
-
-            error: function (jqXHR, status) {
-                // error handler
-                console.log(jqXHR);
-                alert('fail' + status.code);
-            }
-        });
-
-    }
 
     $(document).ready(function () {
 
