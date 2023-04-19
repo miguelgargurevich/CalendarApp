@@ -3,16 +3,16 @@
 
 // Write your JavaScript code.
 document.addEventListener('DOMContentLoaded', function () {
-    var host = "https://localhost:7261/";
+    //var host = "https://localhost:7261/";
     //var host = "https://apicalendar20230415010154.azurewebsites.net/";
 
-    var arrayData = []; //arrayBirthdays.concat(arrayHolidays).concat(arrayVacations).concat(arraySessions).concat(arrayOthers);
+    var host = document.getElementById('hostName').value;
 
-    
+    var arrayData = arrayHolidays; //arrayBirthdays.concat(arrayHolidays).concat(arrayVacations).concat(arraySessions).concat(arrayOthers);
+
     //console.log(arrayData);
 
     var calendarEl = document.getElementById('calendar');
-    //calendarEl.classList.remove("container");
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         timeZone: 'UTC', // the default (unnecessary to specify)
@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
             btnExport: {
                 text: 'export',
                 click: function () {
-                    z
                     exportToExcel("xlsx");
                 }
             },
@@ -145,8 +144,8 @@ document.addEventListener('DOMContentLoaded', function () {
         selectMirror: true,
         select: function (arg) { //add event, click empty space --NEW
 
-            $("#new-event--start").attr("disabled", true);
-            $("#new-event--end").attr("disabled", true);
+            $("#new-event--start").attr("disabled", false);
+            $("#new-event--end").attr("disabled", false);
 
             document.getElementById("btnAgregar").style.display = "block";
             document.getElementById("btnActualizar").style.display = "none";
@@ -212,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
-
+        displayEventTime: false,
         //textColor: 'white',
 
     });
@@ -361,15 +360,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 'Content-Type': 'application/json'
             },
             success: function (data, status, xhr) {
-                arrayData = data;
+                arrayData = arrayData.concat(data) ;
                 //console.log('data Async: ', arrayCalendarList);
 
                 // batch every modification into one re-render
                 calendar.batchRendering(() => {
                     // remove all events
-                    calendar.getEvents().forEach(event => event.remove());
+                    //calendar.getEvents().forEach(event => event.remove());
                     //add events from array concat
                     arrayData.forEach(event => calendar.addEvent(event));
+
+                    $('input#event-tag-chk-holiday').prop('checked', false);
+                    $("input#event-tag-chk-holiday").removeAttr('checked');
+                    evalCheckedTypes();
 
                 });
 
@@ -668,11 +671,9 @@ document.addEventListener('DOMContentLoaded', function () {
         $("#external-events").draggable({ handle: "header" });
         //$(".external-events").resizable();
 
-        //$('#event-tag-chk-holiday').prop('checked', false);
-
         getCalendarAsync(); 
+
        
-        //evalCheckedTypes();
 
     });
 

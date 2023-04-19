@@ -14,13 +14,14 @@ namespace CalendarApp.Pages
         private readonly ILogger<IndexModel> _logger;
         public List<EventTypeModel>? EvenTypeList { get; set; }
         public List<CalendarModel>? CalendarList { get; set; }
+        public BaseModel _BaseModel { get; set; }
+        public IConfiguration _configuration;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
-
-
 
         public async Task OnGetAsync()
         {
@@ -28,7 +29,7 @@ namespace CalendarApp.Pages
             //string host = "https://localhost:7261/";
             string host = "https://apicalendar20230415010154.azurewebsites.net/";
             string pathnameEventType = "api/calendar/getEventTypesAsync";
-            string pathnameCalendar = "api/calendar/getCalendarAsync";
+            //string pathnameCalendar = "api/calendar/getCalendarAsync";
 
             string requestUrlEventType = host + pathnameEventType;
             //string requestUrlCalendar = host + pathnameCalendar;
@@ -48,6 +49,14 @@ namespace CalendarApp.Pages
                 objRpta = JsonConvert.DeserializeObject<JArray>(message);
                 this.EvenTypeList = objRpta.Value<JArray>().ToObject<List<EventTypeModel>>();
 
+                //var apiSettings = new APISettings();
+
+                //var sapiSettings = _configuration.GetSection("APISettings");
+
+                
+
+
+                this._BaseModel = new BaseModel() { hostName = host};
 
                 //responseMessage = await myAppHTTPClient.GetAsync(requestUrlCalendar);
                 //content = responseMessage.Content;
@@ -60,7 +69,8 @@ namespace CalendarApp.Pages
             }
             catch (HttpRequestException exception)
             {
-                Console.WriteLine("An HTTP request exception occurred. {0}", exception.Message);
+                _logger.LogError("An HTTP request exception occurred. {0}", exception.Message);
+
             }
         }
 

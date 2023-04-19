@@ -4,7 +4,7 @@
 @model IndexModel
 
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Calendar";
 }
 
 <div id='external-events' style="position: fixed; left: 20px; top: 170px; z-index: 5; display: none; ">
@@ -106,6 +106,9 @@
     </div>
 </div>
 
+<div id="database">
+    <input type="hidden" id="hostName" value="@Model._BaseModel.hostName">
+</div>
 
 
 @section Scripts
