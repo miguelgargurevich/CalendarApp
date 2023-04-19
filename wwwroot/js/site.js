@@ -3,8 +3,6 @@
 
 // Write your JavaScript code.
 document.addEventListener('DOMContentLoaded', function () {
-    //var host = "https://localhost:7261/";
-    //var host = "https://apicalendar20230415010154.azurewebsites.net/";
 
     var host = document.getElementById('hostName').value;
 

@@ -26,8 +26,8 @@ namespace CalendarApp.Pages
         public async Task OnGetAsync()
         {
 
-            //string host = "https://localhost:7261/";
-            string host = "https://apicalendar20230415010154.azurewebsites.net/";
+            var host = _configuration["APISettings:UrlProduccion"];
+
             string pathnameEventType = "api/calendar/getEventTypesAsync";
             //string pathnameCalendar = "api/calendar/getCalendarAsync";
 
@@ -47,15 +47,8 @@ namespace CalendarApp.Pages
                 message = await content.ReadAsStringAsync();
 
                 objRpta = JsonConvert.DeserializeObject<JArray>(message);
-                this.EvenTypeList = objRpta.Value<JArray>().ToObject<List<EventTypeModel>>();
-
-                //var apiSettings = new APISettings();
-
-                //var sapiSettings = _configuration.GetSection("APISettings");
-
                 
-
-
+                this.EvenTypeList = objRpta.Value<JArray>().ToObject<List<EventTypeModel>>();
                 this._BaseModel = new BaseModel() { hostName = host};
 
                 //responseMessage = await myAppHTTPClient.GetAsync(requestUrlCalendar);
