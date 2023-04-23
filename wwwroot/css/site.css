@@ -1,6 +1,6 @@
 
 body {
-    margin: 30px 10px;
+    margin: 50px 20px;
     padding: 0;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     font-size: 14px;
@@ -11,7 +11,6 @@ body {
   position: fixed;
   left: 20px;
   top: 180px;
-  
   
   
   */
@@ -202,3 +201,74 @@ input[type=radio]#new-radio-other {
     /*  ;*/
     /*display:block;*/
 }
+
+textarea {
+    resize: none;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+    body {
+        margin: 30px 10px;
+        padding: 0;
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        font-size: 14px;
+    }
+}
+
+/* default styles here for older browsers. 
+       I tend to go for a 600px - 960px width max but using percentages
+    */
+@media only screen and (min-width: 960px) {
+    /* styles for browsers larger than 960px; */
+    body {
+        margin: 10px;
+        padding: 0;
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        font-size: 14px;
+    }
+}
+
+
+/* Small devices (portrait tablets and large phones, 600px and up)
+@media only screen and (min-width: 600px) {
+
+    body {
+        margin: 10px;
+        padding: 0;
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        font-size: 14px;
+    }
+}
+/* Medium devices (landscape tablets, 768px and up)
+@media only screen and (min-width: 768px) {
+
+    body {
+        margin: 10px;
+        padding: 0;
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        font-size: 14px;
+    }
+}
+/* Large devices (laptops/desktops, 992px and up) 
+@media only screen and (min-width: 992px) {
+
+    body {
+        margin: 10px;
+        padding: 0;
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        font-size: 14px;
+    }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) 
+@media only screen and (min-width: 1200px) {
+
+    body {
+        margin: 10px;
+        padding: 0;
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        font-size: 14px;
+    }
+}
+*/

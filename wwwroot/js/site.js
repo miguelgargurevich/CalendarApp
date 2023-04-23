@@ -17,31 +17,32 @@ document.addEventListener('DOMContentLoaded', function () {
         handleWindowResize: true,
         customButtons: {
             btnExport: {
-                text: 'export',
+                text: '',
                 click: function () {
                     exportToExcel("xlsx");
                 }
             },
             btnFilter: {
-                text: 'filter',
+                text: '',
                 click: function () {
                     viewFilter();
                 }
             }
         },
         headerToolbar: {
-            left: 'prev,next today btnFilter',
+            left: 'prev,next today btnFilter btnExport',
             center: 'title',
-            right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,dayGridYear,listYear'
+            right: 'multiMonthYear,dayGridYear,listYear',
+
         },
         buttonText: {
             multiMonthYear: 'year',
-            dayGridMonth: 'month',
-            timeGridWeek: 'week',
-            timeGridDay: 'day',
-            dayGridYear: 'full',
+            //dayGridMonth: 'month',
+            dayGridYear: 'month',
+            //timeGridWeek: 'week',
+            //timeGridDay: 'day',
             listYear: "list"
-        },
+        },        
         initialView: "multiMonthYear",
         //initialDate: '2023-01-12',
         weekends: true,
@@ -210,6 +211,17 @@ document.addEventListener('DOMContentLoaded', function () {
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
         displayEventTime: false,
+        nowIndicator: true,
+        viewDidMount: function (event, element) {
+            evalCalendarView();
+
+            
+            //console.log(obj)
+        },
+        eventDidMount: function (event, element) {
+            // Create the icon
+
+        },
         //textColor: 'white',
 
     });
@@ -476,6 +488,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
+    function evalCalendarView() {
+        var type = calendar.currentData.currentViewType;
+        var arrView = ["multiMonthYear", "dayGridYear", "timeGridWeek", "timeGridDay", "dayGridMonth"];
+        var res = arrView.filter(function (x) { return x == type; });
+        //console.log(res.length);
+
+        var obj = document.getElementsByClassName("fc-header-toolbar")[0];
+        if (res.length == 1)
+            obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[4].style.display = 'none';
+        else
+            obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[4].style.display = '';
+
+
+        // Add icon before the title
+        var obj = document.getElementsByClassName("fc-header-toolbar")[0];
+        obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[2].innerHTML = '<i class="fa fa-clock-o" aria-hidden="true"></i>';
+        obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[3].innerHTML = '<i class="fa fa-filter" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+        obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[4].innerHTML = '<i class="fa fa-floppy-o" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+
+        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[0].innerHTML = '<i class="fa fa-calendar" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[1].innerHTML = '<i class="fa fa-calendar-o" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[2].innerHTML = '<i class="fa fa-list" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+
+    }
+
+
     $('#event-tag-chk-holiday').change(function () {
         evalCheckedTypes();
     });
@@ -644,8 +682,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     });
-
-
+    
     $(document).ready(function () {
 
         //getEventTypes();
@@ -671,12 +708,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         getCalendarAsync(); 
 
-       
+        //console.log(calendar.currentData.currentViewType);
+        
 
     });
 
 
 
     calendar.render();
+
+    evalCalendarView();
+
 });
 
