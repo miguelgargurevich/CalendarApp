@@ -32,15 +32,15 @@ document.addEventListener('DOMContentLoaded', function () {
         headerToolbar: {
             left: 'prev,next today btnFilter btnExport',
             center: 'title',
-            right: 'multiMonthYear,dayGridYear,listYear',
+            right: 'multiMonthYear,dayGridMonth,timeGridDay,listYear',
 
         },
         buttonText: {
             multiMonthYear: 'year',
-            //dayGridMonth: 'month',
-            dayGridYear: 'month',
-            //timeGridWeek: 'week',
-            //timeGridDay: 'day',
+            dayGridMonth: 'month',
+            //dayGridYear: 'month',
+            timeGridWeek: 'week',
+            timeGridDay: 'day',
             listYear: "list"
         },        
         initialView: "multiMonthYear",
@@ -509,7 +509,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[0].innerHTML = '<i class="fa fa-calendar" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
         obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[1].innerHTML = '<i class="fa fa-calendar-o" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
-        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[2].innerHTML = '<i class="fa fa-list" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[2].innerHTML = '<i class="fa fa-list-alt" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[3].innerHTML = '<i class="fa fa-list" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+        
 
     }
 

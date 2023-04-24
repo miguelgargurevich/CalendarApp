@@ -126,7 +126,7 @@ namespace apiCalendar.Repository.Implementaciones
                     try
                     {
                         conn.Open();
-                        comm.ExecuteNonQuery();
+                        await comm.ExecuteNonQueryAsync();
 
                         int returnID = (int)comm.Parameters["@id"].Value;
                         list.id = returnID;
@@ -171,7 +171,7 @@ namespace apiCalendar.Repository.Implementaciones
                     try
                     {
                         conn.Open();
-                        comm.ExecuteNonQuery();
+                        await comm.ExecuteNonQueryAsync();
                     }
                     catch (SqlException ex)
                     {
@@ -205,7 +205,7 @@ namespace apiCalendar.Repository.Implementaciones
                     try
                     {
                         conn.Open();
-                        comm.ExecuteNonQuery();
+                        await comm.ExecuteNonQueryAsync();
                     }
                     catch (SqlException ex)
                     {
@@ -240,7 +240,7 @@ namespace apiCalendar.Repository.Implementaciones
                     using (var adapter = new SqlDataAdapter(queryString, conn))
                     {
                         conn.Open();
-                        var reader = adapter.SelectCommand.ExecuteReader();
+                        var reader = await adapter.SelectCommand.ExecuteReaderAsync();
                         while (reader.Read())
                         {
                             CalendarBE obj = new CalendarBE();
