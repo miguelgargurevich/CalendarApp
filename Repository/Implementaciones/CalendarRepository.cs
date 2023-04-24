@@ -98,12 +98,12 @@ namespace apiCalendar.Repository.Implementaciones
         public async Task<CalendarBE> PostEventAddAsync(CalendarBE calendarBE)
         {
             CalendarBE list = new CalendarBE();
-            var _connStr = _configuration.GetConnectionString("Produccion");
+            
             string _query = "INSERT INTO [Calendar] (Title,StartDate,EndDate,AllDay,EventTypeId,EventTypeName,CalendarTypeId,CalendarTypeName,Description,UserCreate,DateCreate) " +
                 "values (@title,@startdate,@enddate,@allDay,@eventTypeId,@eventTypeName,@calendarTypeId,@calendarTypeName,@description,@userCreate,@dateCreate)" +
                 " Set @id = Scope_Identity();";
             
-            using (SqlConnection conn = new SqlConnection(_connStr))
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 using (SqlCommand comm = new SqlCommand())
                 {
@@ -148,10 +148,10 @@ namespace apiCalendar.Repository.Implementaciones
         public async Task<CalendarBE> PostEventUpdAsync(CalendarBE calendarBE)
         {
             CalendarBE list = new CalendarBE();
-            var _connStr = _configuration.GetConnectionString("Produccion");
+            
             string _query = "" +
                 "UPDATE Calendar SET title = @title, startdate = @startdate, enddate = @enddate, description = @description, eventtypeid = @eventtypeid, eventtypename = @eventtypename, calendartypeid = @calendartypeid,calendartypename = @calendartypename, allday = @allday WHERE id = @id";
-            using (SqlConnection conn = new SqlConnection(_connStr))
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 using (SqlCommand comm = new SqlCommand())
                 {
@@ -190,10 +190,10 @@ namespace apiCalendar.Repository.Implementaciones
         public async Task<CalendarBE> PostEventDelAsync(CalendarBE calendarBE)
         {
             CalendarBE list = new CalendarBE();
-            var _connStr = _configuration.GetConnectionString("Produccion");
+            
             string _query = "" +
                 "Delete from Calendar WHERE id = @id";
-            using (SqlConnection conn = new SqlConnection(_connStr))
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 using (SqlCommand comm = new SqlCommand())
                 {
