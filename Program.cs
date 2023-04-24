@@ -1,7 +1,16 @@
+using apiCalendar.Repository.Contratos;
+using apiCalendar.Repository.Implementaciones;
+using apiCalendar.Services.Contratos;
+using apiCalendar.Services.Implementaciones;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<IEmailServices, EmailServices>();
+builder.Services.AddScoped<ICalendarServices, CalendarServices>();
+builder.Services.AddScoped<ICalendarRepository, CalendarRepository>();
 
 var app = builder.Build();
 
@@ -21,5 +30,9 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
