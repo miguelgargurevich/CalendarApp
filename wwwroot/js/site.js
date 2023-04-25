@@ -36,13 +36,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
         },
         buttonText: {
-            multiMonthYear: 'year',
-            dayGridMonth: 'month',
+            multiMonthYear: '',
+            dayGridMonth: '',
             //dayGridYear: 'month',
-            timeGridWeek: 'week',
-            timeGridDay: 'day',
-            listYear: "list"
-        },        
+            timeGridWeek: '',
+            timeGridDay: '',
+            listYear: ''
+        },
+        buttonIcons: {
+            //multiMonthYear: 'calendar',
+            //dayGridMonth: 'chevron-left',
+            //dayGridYear: 'chevron-left',
+            //timeGridWeek: 'chevron-left',
+            //timeGridDay: 'chevron-left',
+            //listYear: ""
+        },
         initialView: "multiMonthYear",
         //initialDate: '2023-01-12',
         weekends: true,
@@ -219,13 +227,42 @@ document.addEventListener('DOMContentLoaded', function () {
             //console.log(obj)
         },
         eventDidMount: function (event, element) {
-            // Create the icon
+            // Add icon before the title
+            setIconsHeader();
 
         },
+        dayCellDidMount: function (arg) {
+            // Add icon before the title
+            
+            setIconsHeader();
+            
+            //if (arg.el.classList.contains("fc-day-future")) {
+            //    var theElement = arg.el.querySelectorAll(".fc-daygrid-day-frame > .fc-daygrid-day-events")[0]
+            //    setTimeout(function () {
+            //        if (theElement.querySelectorAll(".fc-daygrid-event-harness").length === 0) { // check there's no event
+            //            //theElement.innerHTML = theElement.innerHTML + '<div class="text-center"><i class="calendar-icon fas fa-plus"></i></span></div>';
+            //        }
+            //    }, 10)
+            //}
+            
+        }
         //textColor: 'white',
 
     });
 
+    function setIconsHeader() {
+        // Create the icon
+        var obj = document.getElementsByClassName("fc-header-toolbar")[0];
+        obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[2].innerHTML = '<i class="fa-solid fa-clock-o" aria-hidden="true"></i>';
+        obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[3].innerHTML = '<i class="fa-solid fa-filter" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+        obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[4].innerHTML = '<i class="fa-solid fa-floppy-o" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+
+        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[0].innerHTML = '<i class="fa-solid fa-calendar" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[1].innerHTML = '<i class="fa-solid fa-calendar-week" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[2].innerHTML = '<i class="fa-solid fa-calendar-day" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[3].innerHTML = '<i class="fa-solid fa-list" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
+
+    }
 
     function evalTypeColor(eventColor) {
         var elementtype = "";
@@ -502,6 +539,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         // Add icon before the title
+        /*
         var obj = document.getElementsByClassName("fc-header-toolbar")[0];
         obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[2].innerHTML = '<i class="fa fa-clock-o" aria-hidden="true"></i>';
         obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[3].innerHTML = '<i class="fa fa-filter" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
@@ -511,7 +549,7 @@ document.addEventListener('DOMContentLoaded', function () {
         obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[1].innerHTML = '<i class="fa fa-calendar-o" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
         obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[2].innerHTML = '<i class="fa fa-list-alt" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
         obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[3].innerHTML = '<i class="fa fa-list" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
-        
+        */
 
     }
 
@@ -564,6 +602,24 @@ document.addEventListener('DOMContentLoaded', function () {
         calendar.render();
     });
 
+    function sumarDias(myfecha, dias) {
+        var fecha = new Date(myfecha);
+        fecha.setDate(fecha.getDate() + dias);
+
+        var dd = formatDate(fecha);
+        
+        return dd;
+    }
+
+    function padLeft(n) {
+        return ("00" + n).slice(-2);
+    }
+
+    function formatDate(d) {
+        dformat = [padLeft(d.getDate()), padLeft(d.getMonth() + 1), d.getFullYear()].join('/');
+    return dformat
+    }
+
     $('#btnAgregar').click(function () {
         var start_format = document.getElementById("new-event--start").value;
         var end_format = document.getElementById("new-event--end").value;
@@ -587,6 +643,11 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("Invalid range");
             return false;
         }
+
+        //test MFG
+        var strEndAddDay = sumarDias(end_format_date, 1);
+        console.log(strEndAddDay);
+        //test MFG
 
         let max = 0;
         arrayData.forEach(character => {
@@ -711,7 +772,7 @@ document.addEventListener('DOMContentLoaded', function () {
         getCalendarAsync(); 
 
         //console.log(calendar.currentData.currentViewType);
-        
+
 
     });
 

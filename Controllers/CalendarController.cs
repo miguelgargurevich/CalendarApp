@@ -60,7 +60,7 @@ namespace CoreApi.Controllers
         {
 
             var respuestaBE = await _CalendarServices.GetEventTypesAsync();
-            return Ok(respuestaBE.ToArray());
+            return Ok(respuestaBE);
         }
 
 

@@ -26,7 +26,8 @@ namespace CalendarApp.Pages
         public async Task OnGetAsync()
         {
 
-            var host = _configuration["APISettings:urlLocalProd"];
+            //var host = _configuration["APISettings:urlLocal"];
+            var host = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host.Value + "/";
 
             string pathnameEventType = "api/calendar/getEventTypesAsync";
             //string pathnameCalendar = "api/calendar/getCalendarAsync";

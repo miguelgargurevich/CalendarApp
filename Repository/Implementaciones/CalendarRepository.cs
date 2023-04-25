@@ -36,7 +36,7 @@ namespace apiCalendar.Repository.Implementaciones
             _configuration = configuration;
             _logger = logger;
 
-            connectionString = _configuration.GetConnectionString("dbProd"); 
+            connectionString = _configuration.GetConnectionString("dbDesa"); 
         }
 
         #region "Metodos y Funciones"
