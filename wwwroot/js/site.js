@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         headerToolbar: {
-            left: 'prev,next today btnFilter btnExport',
+            left: 'prev,next today,btnFilter,btnExport',
             center: 'title',
             right: 'multiMonthYear,dayGridMonth,timeGridDay,listYear',
 
@@ -533,23 +533,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         var obj = document.getElementsByClassName("fc-header-toolbar")[0];
         if (res.length == 1)
-            obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[4].style.display = 'none';
+            obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[4].disabled = true;
         else
-            obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[4].style.display = '';
+            obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[4].disabled = false;
 
-
-        // Add icon before the title
-        /*
-        var obj = document.getElementsByClassName("fc-header-toolbar")[0];
-        obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[2].innerHTML = '<i class="fa fa-clock-o" aria-hidden="true"></i>';
-        obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[3].innerHTML = '<i class="fa fa-filter" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
-        obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[4].innerHTML = '<i class="fa fa-floppy-o" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
-
-        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[0].innerHTML = '<i class="fa fa-calendar" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
-        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[1].innerHTML = '<i class="fa fa-calendar-o" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
-        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[2].innerHTML = '<i class="fa fa-list-alt" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
-        obj.getElementsByTagName("div")[4].getElementsByClassName("fc-button")[3].innerHTML = '<i class="fa fa-list" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
-        */
 
     }
 
