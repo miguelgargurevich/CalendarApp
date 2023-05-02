@@ -15,6 +15,16 @@ document.addEventListener('DOMContentLoaded', function () {
     var calendar = new FullCalendar.Calendar(calendarEl, {
         timeZone: 'UTC', // the default (unnecessary to specify)
         handleWindowResize: true,
+        initialView: "multiMonthYear",
+        //initialDate: '2023-01-12',
+        weekends: true,
+        editable: true,
+        dayMaxEvents: true, // allow "more" link when too many events
+        displayEventTime: false,
+        nowIndicator: true,
+        navLinks: true, // can click day/week names to navigate views
+        selectMirror: true,
+        selectable: true,
         customButtons: {
             btnExport: {
                 text: '',
@@ -44,17 +54,13 @@ document.addEventListener('DOMContentLoaded', function () {
             listYear: ''
         },
         buttonIcons: {
-            //multiMonthYear: 'calendar',
+            //multiMonthYear: 'fa-clock-o',
             //dayGridMonth: 'chevron-left',
             //dayGridYear: 'chevron-left',
             //timeGridWeek: 'chevron-left',
             //timeGridDay: 'chevron-left',
             //listYear: ""
         },
-        initialView: "multiMonthYear",
-        //initialDate: '2023-01-12',
-        weekends: true,
-
         eventAdd: function () {
             //alert("debe agregar el elemento al array y la BD");
         },
@@ -146,9 +152,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             postEventUpd(data);
         }, 
-        navLinks: true, // can click day/week names to navigate views
-        selectable: true,
-        selectMirror: true,
         select: function (arg) { //add event, click empty space --NEW
 
             $("#new-event--start").attr("disabled", false);
@@ -216,11 +219,8 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#new-event').modal('show');
 
         },
-        editable: true,
-        dayMaxEvents: true, // allow "more" link when too many events
-        displayEventTime: false,
-        nowIndicator: true,
         viewDidMount: function (event, element) {
+
             evalCalendarView();
 
             
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function setIconsHeader() {
         // Create the icon
         var obj = document.getElementsByClassName("fc-header-toolbar")[0];
-        obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[2].innerHTML = '<i class="fa-solid fa-clock-o" aria-hidden="true"></i>';
+        obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[2].innerHTML = '<i class="fa-solid fa-clock" aria-hidden="true"></i>';
         obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[3].innerHTML = '<i class="fa-solid fa-filter" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
         obj.getElementsByTagName("div")[0].getElementsByClassName("fc-button")[4].innerHTML = '<i class="fa-solid fa-floppy-o" aria-hidden="true"></i>'; //'<i class = "fa fa-spinner fa-spin"></i> Please wait...';
 
@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function () {
         //console.log(elt);
 
         if (elt !== undefined) {
-            console.log(elt);
+            //console.log(elt);
             //var elt = document.getElementById('tbl_exporttable_to_xls');
             var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
             return dl ?
@@ -471,7 +471,7 @@ document.addEventListener('DOMContentLoaded', function () {
             error: function (jqXHR, status) {
                 // error handler
                 console.log(jqXHR);
-                alert('fail' + status.code);
+                alert('fail: ' + status.code);
             }
         });
 
@@ -519,7 +519,7 @@ document.addEventListener('DOMContentLoaded', function () {
             error: function (jqXHR, status) {
                 // error handler
                 console.log(jqXHR);
-                alert('fail' + status.code);
+                alert('fail: ' + status.code);
             }
         });
 
@@ -540,6 +540,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
+
+    function sumarDias(myfecha, dias) {
+        var fecha = new Date(myfecha);
+        fecha.setDate(fecha.getDate() + dias);
+
+        var dd = formatDate(fecha);
+
+        return dd;
+    }
+
+    function padLeft(n) {
+        return ("00" + n).slice(-2);
+    }
+
+    function formatDate(d) {
+        dformat = [padLeft(d.getDate()), padLeft(d.getMonth() + 1), d.getFullYear()].join('/');
+        return dformat
+    }
 
     $('#event-tag-chk-holiday').change(function () {
         evalCheckedTypes();
@@ -588,24 +606,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         calendar.render();
     });
-
-    function sumarDias(myfecha, dias) {
-        var fecha = new Date(myfecha);
-        fecha.setDate(fecha.getDate() + dias);
-
-        var dd = formatDate(fecha);
-        
-        return dd;
-    }
-
-    function padLeft(n) {
-        return ("00" + n).slice(-2);
-    }
-
-    function formatDate(d) {
-        dformat = [padLeft(d.getDate()), padLeft(d.getMonth() + 1), d.getFullYear()].join('/');
-    return dformat
-    }
 
     $('#btnAgregar').click(function () {
         var start_format = document.getElementById("new-event--start").value;

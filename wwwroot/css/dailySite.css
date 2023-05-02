@@ -1,0 +1,526 @@
+﻿
+* {
+    margin: 0px;
+    font-family: "Poppins", sans-serif;
+}
+
+
+body {
+    padding: 20px;
+}
+
+body, html {
+    height: 100%;
+}
+
+p, h1, h2, h3 {
+    color: gold;
+}
+
+
+
+.sombra {
+    background: linear-gradient(rgba(250,250,250, 0.1),rgba(250,250,250, 0.1));
+    box-shadow: 0px 0px 10px #000;
+    /*border-radius: 15px;*/
+}
+
+.bg {
+    /*background-image: url(../assets/images/fondo-black.jpg); */
+    background: linear-gradient(rgba(250,250,250, 0.1),rgba(250,250,250, 0.1)), url(../images/fondo-black.jpg);
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-sorteo {
+    /*background-image: url(../assets/images/fondo-black.jpg); */
+
+    background: linear-gradient(rgba(250,250,250, 0.1),rgba(250,250,250, 0.1));
+    box-shadow: 0px 0px 10px #000;
+}
+
+.flexbox {
+    align-items: center;
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    width: 130px;
+    border-radius: 10px;
+    margin: 10px;
+    border-style: solid;
+    border-width: 3px;
+    color: #fff;
+    /*background-color: white;*/
+    background: linear-gradient(rgba(250,250,250, 0.5),rgba(250,250,250, 0.1));
+    font-size: large;
+}
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+}
+
+.my-class-form-control-group {
+    display: flex;
+    align-items: Center;
+}
+
+.video {
+    width: 100%;
+    margin-top: 60px;
+    border-style: ridge;
+    border-color: gray;
+    border-width: 5px;
+    margin-left: 30px;
+}
+
+.imagen {
+    width: 100%;
+}
+
+.error {
+    color: red;
+}
+
+.warn {
+    color: orange;
+}
+
+.info {
+    color: darkgreen;
+}
+
+.derecha {
+    float: right;
+    position: fixed;
+}
+
+
+.frame {
+    /*border: 3px solid #ccc;
+background: #eee;
+padding: 15px 10px;*/
+    margin: auto;
+    border-style: unset;
+    height: 100%;
+}
+
+
+
+#tv-frame {
+    border: 20px solid black;
+    height: 500px;
+    width: 800px;
+    background-color: #444;
+    margin: 50px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    #tv-frame iframe {
+        height: 480px;
+        width: 640px;
+        border: none;
+    }
+
+#roulette {
+    margin: 50px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#backboard {
+    margin: 50px auto;
+    height: 200px;
+    width: 300px;
+    background-color: #eee;
+    border: 5px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#timer {
+    margin: 50px auto;
+    font-size: 100px;
+    font-weight: bold;
+    text-align: center;
+}
+
+div.timer {
+    border: 1px #666666 solid;
+    width: 190px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 36px;
+    font-family: "Courier New", Courier, monospace;
+    text-align: center;
+    margin: 5px;
+}
+
+/* lista */
+.scrum-board {
+    position: relative;
+    /*margin-left: 240px;
+margin: 0 auto;*/
+    background-color: #fff;
+    box-shadow: 0px 0px 10px #000;
+    border-radius: 15px;
+    width: 20%;
+    background: linear-gradient(rgba(250,250,250, 0.1),rgba(250,250,250, 0.1));
+    resize: both;
+    overflow: hidden;
+}
+
+.scrum-tv-board {
+    position: relative;
+    /*margin-left: 240px;*/
+    /*margin: 0 auto;*/
+    background-color: #fff;
+    box-shadow: 0px 0px 10px #000;
+    border-radius: 15px;
+    width: 60%;
+    background: linear-gradient(rgba(250,250,250, 0.1),rgba(250,250,250, 0.1));
+    resize: both;
+    overflow: hidden;
+}
+
+.field_wrapper_clock {
+    padding: 5px;
+    background-color: #fff;
+    background: linear-gradient(rgba(250,250,250, 0.1),rgba(250,250,250, 0.1));
+    box-shadow: 0px 0px 10px #000;
+    border-radius: 15px;
+    border-style: ridge;
+    border-width: 5px;
+}
+
+
+
+/* lista */
+.scrum-board-clock {
+    background-color: #fff;
+    box-shadow: 0px 0px 10px #000;
+    border-radius: 15px;
+    width: 60%;
+    background: linear-gradient(rgba(250,250,250, 0.1),rgba(250,250,250, 0.1));
+}
+
+.board {
+    position: relative;
+    padding: 10px;
+    height: 100%;
+    margin-top: 15px;
+    background-image: url(../images/confetti-gradient.gif);
+    background: linear-gradient(rgba(250,250,250, 0.1),rgba(250,250,250, 0.1));
+    /*
+border-radius: 15px;
+border-style: solid;
+border-color: white;
+border-width: 15px;
+*/
+}
+
+.frame-calendario {
+    position: absolute;
+    margin: 0 auto;
+    border-radius: 15px;
+    z-index: 0;
+    margin-right: 100px;
+}
+
+.seleccion {
+    content: ' ';
+    display: block;
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.parrafos {
+    color: #fff;
+    text-align: left;
+    background: linear-gradient(rgba(250,250,250, 0.5),rgba(250,250,250, 0.1));
+    padding: 2px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    /*
+background-color: #fff;
+margin-left: 40px;
+margin-right: 40px;
+*/
+}
+
+.scrum-board-sorteo {
+    position: absolute;
+    width: 300px;
+    margin: 0 auto;
+    border-radius: 15px;
+    z-index: 1;
+}
+
+.board-sorteo {
+    position: relative;
+    margin-top: 15px;
+    /* 
+margin-bottom: 15px;
+padding: 15px;
+background-color: #f4f4f4; 
+background: linear-gradient(rgba(250,250,250, 0.1),rgba(250,250,250, 0.1));
+box-shadow: 0px 0px 10px #000;
+border-radius: 15px;
+*/
+    height: 100%;
+    background: linear-gradient(rgba(250,250,250, 0.1),rgba(250,250,250, 0.1));
+}
+
+
+/* TV frame */
+.tv {
+    position: relative;
+    width: 700px;
+    height: 40px;
+    background-color: #000;
+    border-radius: 15px;
+    background: linear-gradient(rgba(250,250,250, 0.1),rgba(250,250,250, 0.1));
+}
+
+/* Screen */
+.screen {
+    /*position: absolute;
+left: 20px;
+width: 660px;
+margin-top: 20px;
+*/
+    background: linear-gradient(rgba(250,250,250, 0.1),rgba(250,250,250, 0.1));
+}
+
+/* Button */
+.button {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #FFF;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+    /* Button text */
+    .button::before,
+    .button::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px;
+        height: 8px;
+        background-color: #000;
+        border-radius: 50%;
+        transition: transform 0.2s;
+    }
+
+    .button::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .button::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+/* Button on state */
+.tv.on .button {
+    background-color: #F00;
+}
+
+    .tv.on .button::before,
+    .tv.on .button::after {
+        background-color: #FFF;
+    }
+
+    .tv.on .button::before {
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    .tv.on .button::after {
+        transform: translate(-50%, -50%) rotate(-90deg);
+    }
+
+#clock-btn {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #000;
+    /*margin-top: 50px;*/
+    box-shadow: 0px 5px 0px #000;
+    transition: all 0.2s;
+    top: 1%;
+    position: absolute;
+    /*bottom: 15px;*/
+    right: 1%;
+    opacity: 0.5;
+    cursor: hand;
+}
+
+    #clock-btn::before {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 6px;
+        height: 40px;
+        background-color: #000;
+        border-radius: 3px;
+    }
+
+    #clock-btn::after {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 6px;
+        background-color: #000;
+        border-radius: 3px;
+    }
+
+#timer {
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#clock-btn.active {
+    transform: translateY(5px);
+    box-shadow: 0px 0px 0px #000;
+}
+
+#containerExample {
+    margin-top: 25px;
+}
+
+.time-btn {
+    /*background-color: white;*/
+    width: 25px;
+    height: 20px;
+    border-radius: 14px;
+    cursor: default;
+}
+
+div.files-tree {
+    /*height: 100px;
+  width: 15%;
+  background-color: #303030;
+  float: left;
+   max-width: 30%;*/
+    resize: both;
+    overflow: hidden;
+}
+
+.wrapper {
+    min-width: 200px;
+    /*
+  min-height: 150px;
+position: absolute;
+top: 50%;
+left: 50%;
+max-width: 450px;
+width: 100%;
+background: #fff;
+border-radius: 10px;
+transform: translate(-50%, -50%);
+box-shadow: 10px 10px 15px rgba(0,0,0,0.06);*/
+}
+
+    .wrapper header {
+        margin-top: 15px;
+        color: white;
+        text-align: center;
+        /*
+border-bottom-style: groove
+font-size: 20px;
+ font-weight: 500;
+padding: 15px 30px;
+border-bottom: 1px solid #ccc;
+*/
+    }
+
+        .wrapper header.active {
+            cursor: default;
+            user-select: none;
+        }
+
+/**/
+#myInputdropdown {
+    box-sizing: border-box;
+    background-image: url('../images/searchicon.png');
+    background-position: 14px 12px;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background-size: 30px;
+}
+
+    #myInputdropdown:focus {
+        outline: 3px solid #ddd;
+    }
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: linear-gradient(rgba(250,250,250, 0.5),rgba(250,250,250, 0.1));
+    min-width: 230px;
+    border: 1px solid #ddd;
+    z-index: 1;
+    border-radius: 10px;
+}
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+.dropdown a:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}
+
+
+
+.bigdrop.select2-container .select2-results {
+    max-height: 200px;
+}
+
+.bigdrop .select2-results {
+    max-height: 200px;
+}
+
+.bigdrop .select2-choices {
+    min-height: 150px;
+    max-height: 150px;
+    overflow-y: auto;
+}

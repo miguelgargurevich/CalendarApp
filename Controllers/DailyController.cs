@@ -4,11 +4,11 @@ using testApi.Models;
 
 namespace testApi.Controllers;
 
-public class HomeController : Controller
+public class DailyController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<DailyController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public DailyController(ILogger<DailyController> logger)
     {
         _logger = logger;
     }
